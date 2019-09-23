@@ -66,8 +66,7 @@ class SpaceShip(imp.GlobalFunctions):
                                                 w=5, h=5, v=10,
                                                 win=self.win,
                                                 direction=direction,
-                                                col=(255, 0, 0)))
-
+                                                col=(0, 205, 0)))
 
     class Projectile:
         def __init__(self, x, y, w, h, v, win, direction, col):
@@ -97,3 +96,7 @@ class SpaceShip(imp.GlobalFunctions):
             if direction == 'down':
                 self.y += self.v
             self.draw()
+
+
+
+

@@ -25,6 +25,10 @@ class GlobalFunctions:
 
         return pressed
 
+    def collision(self, obj1, obj2):
+
+        pass
+
 
 
 
