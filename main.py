@@ -1,14 +1,15 @@
+import window
+import spaceship
 import imp
-
 # ************** CODE STARTS HERE ***************
 # create window
-win = imp.window.Window(imp.config.WIN_SIZE, imp.config.TITLE)
+win = window.Window(imp.config.WIN_SIZE, imp.config.TITLE)
 # create players
-player_1 = imp.Player(x=50, y=50, w=50, h=50, v=20,
+player_1 = spaceship.SpaceShip(x=50, y=50, w=50, h=50, v=20,
                       win=win.win,
                       col=(205, 0, 0),
                       form='rectangle')
-
+run = True
 # main loop
 while run:
     imp.pygame.time.delay(100)
@@ -20,7 +21,7 @@ while run:
     # clear
     win.win.fill((0, 0, 0))
 
-    player_1.move(self.key_press())
+    player_1.move(player_1.key_press())
     player_1.shoot('up')
 
 

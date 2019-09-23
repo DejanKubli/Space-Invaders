@@ -1,12 +1,8 @@
 import pygame
 import config
-import window
-import spaceship
 
 
 class GlobalFunctions:
-    def __init__(self):
-        pass
 
     def key_press(self):
         keys = pygame.key.get_pressed()

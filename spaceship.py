@@ -1,7 +1,7 @@
-from imp import GlobalFunctions
+import imp
 
 
-class SpaceShip(GlobalFunctions):
+class SpaceShip(imp.GlobalFunctions):
     # form = string of shape
     # col = color tuple RGB
     def __init__(self, x, y, w, h, v, win, col, form):
@@ -49,14 +49,7 @@ class SpaceShip(GlobalFunctions):
         self.draw()
 
     def shoot(self, direction):
-        if 'space' not in self.key_press():
-            return
-        self.projectiles.append(self.Projectile(x=self.x + self.w / 2,
-                                                y=self.y,
-                                                w=5, h=5, v=10,
-                                                win=self.win,
-                                                direction=direction,
-                                                col=(255, 0, 0)))
+
         for proj in self.projectiles:
             proj.move(direction)
             if direction == 'up':
@@ -65,6 +58,16 @@ class SpaceShip(GlobalFunctions):
             if direction == 'down':
                 if proj.y >= 800:
                     self.projectiles.remove(proj)
+
+        if 'space' not in self.key_press():
+            return
+        self.projectiles.append(self.Projectile(x=self.x + self.w / 2,
+                                                y=self.y,
+                                                w=5, h=5, v=10,
+                                                win=self.win,
+                                                direction=direction,
+                                                col=(255, 0, 0)))
+
 
     class Projectile:
         def __init__(self, x, y, w, h, v, win, direction, col):
