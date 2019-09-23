@@ -1,13 +1,8 @@
 import imp
 
-WIN_SIZE = (500, 500)
-TITLE = 'Space Invaders'
-run = True
-
-
 # ************** CODE STARTS HERE ***************
 # create window
-win = imp.Window(WIN_SIZE, TITLE)
+win = imp.window.Window(imp.config.WIN_SIZE, imp.config.TITLE)
 # create players
 player_1 = imp.Player(x=50, y=50, w=50, h=50, v=20,
                       win=win.win,
@@ -25,7 +20,7 @@ while run:
     # clear
     win.win.fill((0, 0, 0))
 
-    player_1.move(imp.key_press())
+    player_1.move(self.key_press())
     player_1.shoot('up')
 
 
