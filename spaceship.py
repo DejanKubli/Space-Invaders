@@ -48,7 +48,7 @@ class SpaceShip(imp.GlobalFunctions):
 
         self.draw()
 
-    def shoot(self, direction):
+    def shoot(self, direction, new_shot):
 
         for proj in self.projectiles:
             proj.move(direction)
@@ -58,15 +58,14 @@ class SpaceShip(imp.GlobalFunctions):
             if direction == 'down':
                 if proj.y >= 800:
                     self.projectiles.remove(proj)
-
-        if 'space' not in self.key_press():
+        if not new_shot:
             return
         self.projectiles.append(self.Projectile(x=self.x + self.w / 2,
                                                 y=self.y,
                                                 w=5, h=5, v=10,
                                                 win=self.win,
                                                 direction=direction,
-                                                col=(0, 205, 0)))
+                                                col=self.col))
 
     class Projectile:
         def __init__(self, x, y, w, h, v, win, direction, col):

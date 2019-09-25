@@ -26,16 +26,11 @@ class GlobalFunctions:
         return pressed
 
     def collision(self, obj1, obj2):
-
-        pass
-
-
-
-
-
-
-
-
+        for proj in obj1.projectiles:
+            if proj.x >= obj2.x - proj.w and proj.y >= obj2.y - proj.h \
+                    and proj.x < obj2.x + obj2.w and proj.y < obj2.y + obj2.h:
+                obj1.projectiles.remove(proj)
+                return True
 
 
 
