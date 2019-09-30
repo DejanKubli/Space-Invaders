@@ -3,9 +3,10 @@ import config
 import time
 from imp import GlobalFunctions
 from spaceship import SpaceShip
-from random import randint
+from random import randint, choice
 import os
 pygame.init()
+directions = ['left', 'right', 'up', 'down']
 
 
 
@@ -29,8 +30,8 @@ class Game:
     def create_enemy(self):
         self.enemies.append(SpaceShip(x=randint(0, config.WIN_SIZE[0] - 50),
                                       y=randint(0, config.WIN_SIZE[1] / 2),
-                                      w=randint(20, 50),
-                                      h=randint(20, 50),
+                                      w=self.enemy_img.get_width(),
+                                      h=self.enemy_img.get_height(),
                                       v=randint(3, 10),
                                       win=self.win,
                                       img=self.enemy_img,
@@ -39,8 +40,8 @@ class Game:
     def create_player(self):
         self.players.append(SpaceShip(x=10,
                                       y=10,
-                                      w=10,
-                                      h=10,
+                                      w=self.player_img.get_width(),
+                                      h=self.player_img.get_height(),
                                       v=10,
                                       win=self.win,
                                       img=self.player_img,
@@ -70,6 +71,11 @@ class Game:
                 if GlobalFunctions.collision(instance, enemy, self.players[0]):
                     print('GAME OVER!')
 
+                enemy.move(choice(directions))
+                if time.time() - self.timer > 0.5:
+                    enemy.shoot('down', True)
+                    self.timer = time.time()
+
             self.draw()
 
     def draw(self):
@@ -77,11 +83,12 @@ class Game:
 
         for enemy in self.enemies:
             enemy.draw()
+            enemy.shoot('down', False)
+
         for player in self.players:
             player.draw()
 
         pygame.display.update()
-
 
 
 game = Game()

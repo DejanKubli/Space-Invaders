@@ -14,12 +14,10 @@ class SpaceShip(imp.GlobalFunctions):
         self.img = img
         self.proj_img = proj_img
 
-
     def draw(self):
         self.win.blit(self.img, (self.x, self.y))
         for projectile in self.projectiles:
             projectile.draw()
-
 
     def move(self, directions):
         # get screen size
@@ -53,17 +51,28 @@ class SpaceShip(imp.GlobalFunctions):
             if direction == 'up':
                 if proj.y <= 0:
                     self.projectiles.remove(proj)
+
             if direction == 'down':
                 if proj.y >= 800:
                     self.projectiles.remove(proj)
-        if not new_shot:
-            return
-        self.projectiles.append(self.Projectile(x=self.x + self.w / 2,
-                                                y=self.y,
-                                                w=5, h=5, v=10,
-                                                win=self.win,
-                                                direction=direction,
-                                                img=self.proj_img))
+
+        if new_shot:
+            if direction == 'up':
+                self.projectiles.append(self.Projectile(x=self.x + self.w / 2 ,
+                                                        y=self.y,
+                                                        w=5, h=5, v=10,
+                                                        win=self.win,
+                                                        direction=direction,
+                                                        img=self.proj_img))
+
+
+            if direction == 'down':
+                self.projectiles.append(self.Projectile(x=self.x + self.w / 2,
+                                                        y=self.y + self.h,
+                                                        w=5, h=5, v=10,
+                                                        win=self.win,
+                                                        direction=direction,
+                                                        img=self.proj_img))
 
     class Projectile:
         def __init__(self, x, y, w, h, v, win, direction, img):
