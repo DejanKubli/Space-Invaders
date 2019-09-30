@@ -1,8 +1,9 @@
 import pygame
-import config
 
 
 class GlobalFunctions:
+    def __init__(self):
+        super().__init__()
 
     def key_press(self):
         keys = pygame.key.get_pressed()

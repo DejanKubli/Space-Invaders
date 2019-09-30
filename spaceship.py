@@ -2,9 +2,7 @@ import imp
 
 
 class SpaceShip(imp.GlobalFunctions):
-    # form = string of shape
-    # col = color tuple RGB
-    def __init__(self, x, y, w, h, v, win, col, form):
+    def __init__(self, x, y, w, h, v, win, img, proj_img):
         super().__init__()
         self.x = x
         self.y = y
@@ -12,16 +10,16 @@ class SpaceShip(imp.GlobalFunctions):
         self.h = h
         self.v = v
         self.win = win
-        self.col = col
         self.projectiles = []
-        self.form = form
+        self.img = img
+        self.proj_img = proj_img
+
 
     def draw(self):
-        if self.form == 'rectangle':
-            imp.pygame.draw.rect(self.win, self.col, (self.x, self.y, self.w, self.h))
-            imp.pygame.display.update()
-        if self.form == 'triangle':
-            pass
+        self.win.blit(self.img, (self.x, self.y))
+        for projectile in self.projectiles:
+            projectile.draw()
+
 
     def move(self, directions):
         # get screen size
@@ -65,10 +63,10 @@ class SpaceShip(imp.GlobalFunctions):
                                                 w=5, h=5, v=10,
                                                 win=self.win,
                                                 direction=direction,
-                                                col=self.col))
+                                                img=self.proj_img))
 
     class Projectile:
-        def __init__(self, x, y, w, h, v, win, direction, col):
+        def __init__(self, x, y, w, h, v, win, direction, img):
             self.x = x
             self.y = y
             self.w = w
@@ -76,11 +74,10 @@ class SpaceShip(imp.GlobalFunctions):
             self.dir = direction
             self.v = v
             self.win = win
-            self.col = col
+            self.img = img
 
         def draw(self):
-            imp.pygame.draw.rect(self.win, self.col, (self.x, self.y, self.w, self.h))
-            imp.pygame.display.update()
+            self.win.blit(self.img, (self.x, self.y))
 
         def move(self, direction):
             if direction == 'left':
@@ -94,7 +91,7 @@ class SpaceShip(imp.GlobalFunctions):
 
             if direction == 'down':
                 self.y += self.v
-            self.draw()
+
 
 
 
