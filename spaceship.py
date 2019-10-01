@@ -58,13 +58,12 @@ class SpaceShip(imp.GlobalFunctions):
 
         if new_shot:
             if direction == 'up':
-                self.projectiles.append(self.Projectile(x=self.x + self.w / 2 ,
+                self.projectiles.append(self.Projectile(x=self.x + self.w / 2,
                                                         y=self.y,
                                                         w=5, h=5, v=10,
                                                         win=self.win,
                                                         direction=direction,
                                                         img=self.proj_img))
-
 
             if direction == 'down':
                 self.projectiles.append(self.Projectile(x=self.x + self.w / 2,

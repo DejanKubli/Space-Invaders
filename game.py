@@ -3,11 +3,10 @@ import config
 import time
 from imp import GlobalFunctions
 from spaceship import SpaceShip
-from random import randint, choice
+from random import randint, choice, randrange
 import os
 pygame.init()
 directions = ['left', 'right', 'up', 'down']
-
 
 
 class Game:
@@ -20,12 +19,15 @@ class Game:
         self.win = pygame.display.set_mode(config.WIN_SIZE)
         self.bg = pygame.image.load(os.path.join('assets', 'bg.jpg'))
         self.bg = pygame.transform.scale(self.bg, config.WIN_SIZE)
-        self.player_img = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'player.png')).convert_alpha(),
+        self.player_img = pygame.transform.scale(pygame.image.load
+                                                 (os.path.join('assets', 'player.png')).convert_alpha(),
                                                  (75, 75))
-        self.enemy_img = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'enemy_1.png')).convert_alpha(),
+        self.enemy_img = pygame.transform.scale(pygame.image.load
+                                                (os.path.join('assets', 'enemy_1.png')).convert_alpha(),
                                                 (75, 75))
-        self.proj_img = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'bullet.jpg')).convert_alpha(),
-                                                (5, 10))
+        self.proj_img = pygame.transform.scale(pygame.image.load
+                                               (os.path.join('assets', 'bullet.jpg')).convert_alpha(),
+                                               (5, 10))
 
     def create_enemy(self):
         self.enemies.append(SpaceShip(x=randint(0, config.WIN_SIZE[0] - 50),
@@ -67,15 +69,20 @@ class Game:
             for enemy in self.enemies:
                 instance = None
                 if GlobalFunctions.collision(instance, self.players[0], enemy):
+                    self.projectiles.extend(enemy.projectiles)
                     self.enemies.remove(enemy)
-                if GlobalFunctions.collision(instance, enemy, self.players[0]):
+
+                if GlobalFunctions.collision(instance, enemy, self.players[0])\
+                        or GlobalFunctions.collision(instance, self, self.players[0]):
                     print('GAME OVER!')
 
                 enemy.move(choice(directions))
-                if time.time() - self.timer > 0.5:
+                if time.time() - self.timer > (randrange(5, 20)/10):
                     enemy.shoot('down', True)
                     self.timer = time.time()
 
+            if len(self.enemies) <= 0:
+                self.create_enemy()
             self.draw()
 
     def draw(self):
@@ -88,12 +95,15 @@ class Game:
         for player in self.players:
             player.draw()
 
+        for projectile in self.projectiles:
+            projectile.move('down')
+            projectile.draw()
+
         pygame.display.update()
 
 
 game = Game()
 game.create_player()
-game.create_enemy()
 game.run()
 
 pygame.quit()
